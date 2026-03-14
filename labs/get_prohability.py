@@ -1,18 +1,22 @@
 #!bin/usr/env python
 
 def getProhability(k):
+
+    def toPercent(x):
+        return round(x*100,1)
+
     result = []
     if len(k) == 2:
         all = 1/k[0] + 1/k[1]
-        result.append(round(1/k[0]/all*100,1)) 
-        result.append(round(1/k[1]/all*100,1))
-        result.append(round(1/all*100,1))
+        result.append(toPercent(1/k[0]/all)) 
+        result.append(toPercent(1/k[1]/all))
+        result.append(toPercent(1/all))
     if len(k) == 3:
         all = 1/k[0] + 1/k[1] + 1/k[2]
-        result.append(round(1/k[0]/all*100,1)) 
-        result.append(round(1/k[1]/all*100,1))
-        result.append(round(1/k[2]/all*100,1))
-        result.append(round(1/all*100,1))
+        result.append(toPercent(1/k[0]/all)) 
+        result.append(toPercent(1/k[1]/all))
+        result.append(toPercent(1/k[2]/all))
+        result.append(toPercent(1/all))
     return result
 
 print (getProhability([3.30, 1.33]))
