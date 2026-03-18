@@ -12,7 +12,7 @@ from BetExplorerBasketballModules.accept_cookies import AcceptCookies
 from BetExplorerBasketballModules.click_summary import ClickSummary
 from BetExplorerBasketballModules.click_country_name import ClickCountryName
 from BetExplorerBasketballModules.click_season import ClickSeason
-
+from BetExplorerBasketballModules.click_results import ClickResults
 def main():
     logging.info("Запуск баскетбольного парсера BetExplorer")
     
@@ -26,6 +26,7 @@ def main():
         ClickSummary(page).process()
         ClickCountryName(page, target, links).process()
         ClickSeason(page, target).process()
+        ClickResults(page).process()
 
         input()
 
