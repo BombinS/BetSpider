@@ -4,6 +4,7 @@ class ClickSeason:
     
     def __init__(self, page, target):
         self.page = page
+        self.target = target
         self.xpath = f"//a[contains(@href, '{target}')]"
         self.timeout = 5000
 
