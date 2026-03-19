@@ -14,6 +14,8 @@ from BetExplorerBasketballModules.click_country_name import ClickCountryName
 from BetExplorerBasketballModules.click_season import ClickSeason
 from BetExplorerBasketballModules.click_results import ClickResults
 from BetExplorerBasketballModules.click_main_season import ClickMainSeason
+from BetExplorerBasketballModules.get_schedule import GetSchedule
+
 def main():
     logging.info("Запуск баскетбольного парсера BetExplorer")
     
@@ -22,6 +24,7 @@ def main():
         browser = p.chromium.launch(headless=False)
         page = browser.new_page()    
 
+        # переход на отображение общей таблицы результатов
         GoToBasketballArea(page).process()
         AcceptCookies(page).process()
         ClickSummary(page).process()
@@ -29,6 +32,10 @@ def main():
         ClickSeason(page, target).process()
         ClickResults(page).process()
         ClickMainSeason(page).process()
+
+        # получение информации [участники матча - дата матча]
+        schedule = GetSchedule(page).process()
+        print(schedule)
 
         input()
 
