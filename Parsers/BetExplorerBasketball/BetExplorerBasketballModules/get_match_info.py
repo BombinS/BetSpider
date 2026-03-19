@@ -15,5 +15,7 @@ class GetMatchInfo:
             xpath = f'//tr[contains(., "{self.matchInfo['match']}") and contains(., "{self.matchInfo['date']}")]//td[@class="h-text-left"]//a'
             ClickMatch(self.page, xpath).process()
             # переопределение даты матча
-            self.matchInfo['datetime'] = ObtainDatetime(self.page).process()
+            ObtainDatetime(self.page, self.matchInfo).process()
+            # получение результатов матча
+            
 
