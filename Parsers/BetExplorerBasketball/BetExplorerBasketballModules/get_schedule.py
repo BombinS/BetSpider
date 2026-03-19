@@ -13,7 +13,7 @@ class GetSchedule:
                 locatorMatches = self.page.locator(f"xpath={self.xPathMatches}")
                 logging.info(f"Успешное получение локатора на список из {locatorMatches.count()} участников матча")
                 locatorDates = self.page.locator(f"xpath={self.xPathDates}")
-                logging.info(f"Успешное получение локатора на список из {locatorDates.count()} даты матча")
+                logging.info(f"Успешное получение локатора на список из {locatorDates.count()} дат матчей")
                 if (locatorMatches.count() != locatorDates.count()):
                      raise Exception("Количество распознанных матчей не совпадает c количеством распознанных дат")
                 for i in range(locatorMatches.count()):
