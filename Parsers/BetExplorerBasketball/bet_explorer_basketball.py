@@ -15,6 +15,7 @@ from BetExplorerBasketballModules.click_season import ClickSeason
 from BetExplorerBasketballModules.click_results import ClickResults
 from BetExplorerBasketballModules.click_main_season import ClickMainSeason
 from BetExplorerBasketballModules.get_schedule import GetSchedule
+from BetExplorerBasketballModules.get_match_info import GetMatchInfo
 
 def main():
     logging.info("Запуск баскетбольного парсера BetExplorer")
@@ -35,7 +36,12 @@ def main():
 
         # получение информации [участники матча - дата матча]
         schedule = GetSchedule(page).process()
-        print(schedule)
+
+        # получение информации для каждого матча
+        #for i in range(len(schedule)):
+        for i in range(1):    
+            GetMatchInfo(page, schedule[i]).process()
+            # page.go_back(wait_until='commit')
 
         input()
 
