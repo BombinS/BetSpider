@@ -19,4 +19,7 @@ class GetMatchInfo:
             ObtainDatetime(self.page, self.matchInfo).process()
             # получение результатов матча
             ObtainMatchResults(self.page, self.matchInfo).process()
+            # получение коэффициентов 1X2
+
+            # получение коэффициентов U/O
 

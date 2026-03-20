@@ -4,13 +4,14 @@ class ClickCountryName:
     
     def __init__(self, page, target, links):
         self.page = page
-
+        self.countryName = ""
         try:
             for key, values in links.items():
                 if target in values:
                     self.countryName = key
-                else:
-                     raise KeyError(f"Наименование страны для цели {target} не найдено")
+                    break
+            if self.countryName == "":
+                 raise KeyError(f"Наименование страны для цели {target} не найдено")
         except Exception as e:
              logging.error(e)
 
