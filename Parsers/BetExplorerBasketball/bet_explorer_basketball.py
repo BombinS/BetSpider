@@ -41,9 +41,11 @@ def main():
         #for i in range(len(schedule)):
         for i in range(1):    
             GetMatchInfo(page, schedule[i]).process()
+            print(schedule[i])
             # page.go_back(wait_until='commit')
 
         input()
 
 if __name__ == "__main__":
+
     main()
