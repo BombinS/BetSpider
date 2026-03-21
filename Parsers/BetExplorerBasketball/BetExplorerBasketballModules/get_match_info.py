@@ -3,6 +3,7 @@ import logging
 from . click_match import ClickMatch
 from . obtain_datetime import ObtainDatetime
 from . obtain_match_results import ObtainMatchResults
+from . click_1x2 import Click1X2
 
 class GetMatchInfo:
     
@@ -20,6 +21,6 @@ class GetMatchInfo:
             # получение результатов матча
             ObtainMatchResults(self.page, self.matchInfo).process()
             # получение коэффициентов 1X2
-
+            Click1X2(self.page).process()
             # получение коэффициентов U/O
 
