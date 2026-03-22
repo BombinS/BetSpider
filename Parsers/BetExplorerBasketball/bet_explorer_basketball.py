@@ -35,18 +35,19 @@ def main():
         ClickMainSeason(page).process()
 
         # получение информации [участники матча - дата матча]
-        schedule = GetSchedule(page).process()
+        seasonInfo = {"season" : target, "schedule" :GetSchedule(page).process()}
 
         # получение информации для каждого матча
-        #for i in range(len(schedule)):
-        for i in range(3):    
-            GetMatchInfo(page, schedule[i]).process()
+        for i in range(len(seasonInfo["schedule"])):    
+            GetMatchInfo(page, seasonInfo["schedule"][i]).process()
             # print(schedule[i])
             page.go_back(wait_until='commit')
             page.go_back(wait_until='commit')
             page.go_back(wait_until='commit')
 
-    input()
+        # сброс json
+        with open(f"../../ParsedData/Basketball/{target}.json", "w", encoding="utf-8") as f:
+            json.dump(seasonInfo, f)
 
 if __name__ == "__main__":
 

@@ -13,8 +13,8 @@ class Obtain1X2Odds:
     def process(self):
         try:
             # todo заменить на wait_for_load_state
-            #self.page.wait_for_selector(f"xpath={self.xpath1X2}", timeout = self.timeout)
-            self.page.wait_for_selector(f"xpath={self.xpathRaw}", timeout = self.timeout)
+            self.page.wait_for_selector("xpath=//td[text()='Average odds']", timeout = self.timeout)
+            # self.page.wait_for_selector(f"xpath={self.xpathRaw}", timeout = self.timeout)
             self.matchInfo["oddHomeWin"] = []
             self.matchInfo["oddDraw"] = []
             self.matchInfo["oddAwayWin"] = []
