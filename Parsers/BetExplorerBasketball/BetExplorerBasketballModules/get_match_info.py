@@ -5,6 +5,7 @@ from . obtain_datetime import ObtainDatetime
 from . obtain_match_results import ObtainMatchResults
 from . click_1x2 import Click1X2
 from . obtain_1x2_odds import Obtain1X2Odds
+from . click_ou import ClickOU 
 from . obtain_ou_odds import ObtainOUOdds
 
 class GetMatchInfo:
@@ -26,6 +27,7 @@ class GetMatchInfo:
             Click1X2(self.page).process()
             Obtain1X2Odds(self.page, self.matchInfo).process()
             # получение коэффициентов U/O
+            ClickOU(self.page).process()
             ObtainOUOdds(self.page, self.matchInfo).process()
 
 

@@ -9,6 +9,7 @@ class Obtain1X2Odds:
         self.timeout = 5000
 
     def process(self):
+        # todo заменить на wait_for_load_state
         self.page.wait_for_selector(f"xpath={self.xpath1X2}", timeout = self.timeout)
         self.matchInfo["oddHomeWin"] = []
         self.matchInfo["oddDraw"] = []
