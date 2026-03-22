@@ -19,7 +19,6 @@ class ObtainMatchResults:
                 self.matchInfo["homeScore"] = totalResult[0].strip()
                 self.matchInfo["awayScore"] = totalResult[1].strip()
                 self.matchInfo["total"] = int(self.matchInfo["homeScore"]) + int(self.matchInfo["awayScore"])
-                logging.info(f"Успешное сохранение результата матча {totalResult}")
 
                 # результат таймов, периодов, четвертей
                 self.page.wait_for_selector(f"xpath={self.partialxPath}", timeout=5000)
@@ -31,7 +30,8 @@ class ObtainMatchResults:
                     xx = (x.strip().split(":"))
                     for y in xx:
                          partialResultClean.append(y)
-                if len(partialResultClean) == 8:
+                # баскетбол
+                if len(partialResultClean) == 8: 
                      self.matchInfo["1stQuarterHome"] = partialResultClean[0]
                      self.matchInfo["1stQuarterAway"] = partialResultClean[1]
                      self.matchInfo["1stQuarterTotal"] = int(self.matchInfo["1stQuarterHome"]) + int(self.matchInfo["1stQuarterAway"])

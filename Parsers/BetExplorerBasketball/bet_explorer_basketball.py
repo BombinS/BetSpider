@@ -39,12 +39,14 @@ def main():
 
         # получение информации для каждого матча
         #for i in range(len(schedule)):
-        for i in range(1):    
+        for i in range(3):    
             GetMatchInfo(page, schedule[i]).process()
-            print(schedule[i])
-            # page.go_back(wait_until='commit')
+            # print(schedule[i])
+            page.go_back(wait_until='commit')
+            page.go_back(wait_until='commit')
+            page.go_back(wait_until='commit')
 
-        input()
+    input()
 
 if __name__ == "__main__":
 
