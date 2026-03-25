@@ -1,11 +1,11 @@
 #!/bin/usr/env python
 
-import psycopg2
+import psycopg2, json, pathlib
+from pathlib import Path
 from contextlib import closing
 import logging
 logging.basicConfig(filename="dd.log", filemode="w", level=logging.DEBUG, encoding="utf-8")
 
-# подключение к Pg
 def init_connection():
     conn = psycopg2.connect(
         host = "localhost",
@@ -16,7 +16,6 @@ def init_connection():
     )
     return conn
 
-# создание таблицы баскетбольной статистики
 def create_table_basketball(conn):
     with conn.cursor() as cur:
         try:
@@ -60,14 +59,23 @@ def create_table_basketball(conn):
         except Exception as e:
             logging.error(e)
 
+def load_match(season, match):
+    print(season)
+    print(match)
+    pass
+
+def load_matches(season):
+    with open(season, "r", encoding="utf-8") as f:
+        data = json.load(f)
+        for match in data["schedule"]:
+            load_match(data["season"], match)
+
 if __name__ == "__main__":
     with closing(init_connection()) as conn:
-        create_table_basketball(conn)
+        # create_table_basketball(conn)
+        path = Path("ParsedData")
+        season = list(path.rglob("acb-2022-2023.json"))[0]
+        load_matches(season)
 
-    # "oddHomeWinPercent": 83.0,
-    # "oddDrawPercent": 4.4,
-    # "oddAwayWinPercent": 12.6,
-    # "thresholdTotal": "167",
-    # "thresholdTotalQuarter": 41.8
 
 

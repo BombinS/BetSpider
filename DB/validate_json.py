@@ -16,7 +16,8 @@ def validate(path):
     
 if __name__ == "__main__":
     path = Path("ParsedData")
-    for filepath in list(path.rglob("*.json")):        
+    for filepath in list(path.rglob("*.json")):
+        print(filepath)        
         r = validate(filepath)
     # with open("example.json", "w") as f:
     #     json.dump(r, f)
