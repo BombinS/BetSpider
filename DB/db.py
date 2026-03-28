@@ -43,14 +43,14 @@ def create_table_basketball(conn):
                     Quarter4thHome          SMALLINT,
                     Quarter4thAway          SMALLINT,
                     Quarter4thTotal         SMALLINT,
-                    oddHomeWin,
+                    oddHomeWin              REAL,
                     oddDraw                 REAL,
                     oddAwayWin              REAL,
                     Margin1X2               REAL,
                     oddHomeWinPercent       REAL,
                     oddDrawPercent          REAL,
                     oddAwayWinPercent       REAL,
-                    thresholdTotal          SMALLINT,
+                    thresholdTotal          REAL,
                     thresholdTotalQuarter   REAL             
                 )    
                 """
@@ -70,6 +70,11 @@ def clear_table_basketball(conn):
 def load_match(conn, season, match):
     with conn.cursor() as cur:
         try:
+            parts = match["datetime"].split("-")
+            normalizedDateTime = f"{parts[0].strip()} {parts[1].strip()}"
+            parts = match["match"].split("-")
+            normalizedHomeTeam = parts[0].strip()
+            normalizedAwayTeam = parts[1].strip() 
             cur.execute(
                 """
                 INSERT INTO ftBasketballResults 
@@ -136,39 +141,39 @@ def load_match(conn, season, match):
                 )
                 """,
                 (
-                    "acb-2022-2023",
-                    "24.05.2023 22:30",
-                    "Barcelona",
-                    "Murcia",
-                    86,
-                    57,
-                    143,
-                    23,
-                    15,
-                    38,
-                    18,
-                    11,
-                    29,
-                    21,
-                    18,
-                    39,
-                    24,
-                    13,
-                    37,
-                    1.24,
-                    17.0,
-                    4.84,
-                    6.7,
-                    75.2,
-                    5.5,
-                    19.3,
-                    161.5,
-                    40.4
+                    season,
+                    normalizedDateTime,
+                    normalizedHomeTeam,
+                    normalizedAwayTeam,
+                    match["homeScore"],
+                    match["awayScore"],
+                    match["total"],
+                    match["1stQuarterHome"],
+                    match["1stQuarterAway"],
+                    match["1stQuarterTotal"],
+                    match["2ndQuarterHome"],
+                    match["2ndQuarterAway"],
+                    match["2ndQuarterTotal"],
+                    match["3rdQuarterHome"],
+                    match["3rdQuarterAway"],
+                    match["3rdQuarterTotal"],
+                    match["4thQuarterHome"],
+                    match["4thQuarterAway"],
+                    match["4thQuarterTotal"],
+                    match["oddHomeWin"],
+                    match["oddDraw"],
+                    match["oddAwayWin"],
+                    match["1X2Margin"],
+                    match["oddHomeWinPercent"],
+                    match["oddDrawPercent"],
+                    match["oddAwayWinPercent"],
+                    match["thresholdTotal"],
+                    match["thresholdTotalQuarter"]
                 )
             )
             conn.commit()
         except Exception as e:
-            logging.error(e)
+            logging.error(f"ошибка вставки матча с исключением: {e}. Матч: {match}")
 
 def load_matches(conn, season):
     with open(season, "r", encoding="utf-8") as f:
