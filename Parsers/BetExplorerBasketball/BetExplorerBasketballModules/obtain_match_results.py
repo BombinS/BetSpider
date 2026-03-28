@@ -30,8 +30,8 @@ class ObtainMatchResults:
                     xx = (x.strip().split(":"))
                     for y in xx:
                          partialResultClean.append(y)
-                # баскетбол
-                if len(partialResultClean) == 8: 
+                # баскетбол (с учетом овертайма)
+                if len(partialResultClean) == 8 or len(partialResultClean) == 10: 
                      self.matchInfo["1stQuarterHome"] = partialResultClean[0]
                      self.matchInfo["1stQuarterAway"] = partialResultClean[1]
                      self.matchInfo["1stQuarterTotal"] = int(self.matchInfo["1stQuarterHome"]) + int(self.matchInfo["1stQuarterAway"])

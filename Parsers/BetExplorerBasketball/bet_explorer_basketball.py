@@ -1,6 +1,7 @@
 #!/bin/usr/env python
 
-import sys, os, json, csv
+import json
+from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 import logging
@@ -16,6 +17,7 @@ from BetExplorerBasketballModules.click_results import ClickResults
 from BetExplorerBasketballModules.click_main_season import ClickMainSeason
 from BetExplorerBasketballModules.get_schedule import GetSchedule
 from BetExplorerBasketballModules.get_match_info import GetMatchInfo
+from BetExplorerBasketballModules.validate_match_info import ValidateMatchInfo
 
 def main():
     logging.info("Запуск баскетбольного парсера BetExplorer")
@@ -40,7 +42,6 @@ def main():
         # получение информации для каждого матча
         for i in range(len(seasonInfo["schedule"])):    
             GetMatchInfo(page, seasonInfo["schedule"][i]).process()
-            # print(schedule[i])
             page.go_back(wait_until='commit')
             page.go_back(wait_until='commit')
             page.go_back(wait_until='commit')
@@ -48,6 +49,10 @@ def main():
         # сброс json
         with open(f"../../ParsedData/Basketball/{target}.json", "w", encoding="utf-8") as f:
             json.dump(seasonInfo, f)
+                
+        # валидация json 
+        for match in seasonInfo["schedule"]:
+            ValidateMatchInfo(match).process()
 
 if __name__ == "__main__":
 
