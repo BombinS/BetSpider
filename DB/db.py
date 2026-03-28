@@ -173,14 +173,20 @@ def load_match(conn, season, match):
 def load_matches(conn, season):
     with open(season, "r", encoding="utf-8") as f:
         data = json.load(f)
-        load_match(conn, data["season"], data["schedule"][0])
-        # for match in data["schedule"]:
-        #     load_match(data["season"], match)
+        #load_match(conn, data["season"], data["schedule"][0])
+        for match in data["schedule"]:
+            load_match(conn, data["season"], match)
 
 if __name__ == "__main__":
     with closing(init_connection()) as conn:
         # create_table_basketball(conn)
-        path = Path("ParsedData")
-        season = list(path.rglob("acb-2022-2023.json"))[0]
-#        load_matches(conn, season)
-        clear_table_basketball(conn)
+        # clear_table_basketball(conn)
+        path = Path("ParsedData\\Basketball")
+        seasons = list(path.rglob("*.json"))
+        for season in seasons:
+            # считаем признаком архивного сезона длину имени спарсенного json. Если больше 8-ми (xxx.json) то архив
+            if len(season.name) > 8:
+                load_matches(conn, season)
+        exit()
+        
+        
