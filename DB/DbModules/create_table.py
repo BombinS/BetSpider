@@ -57,9 +57,36 @@ class CreateTable():
             except Exception as e:
                 logging.error(e)
 
+    # Маркеры тоталов
+    # isTotalOverMoreThem1Points  true if total - 1  >= treshholdTotal
+    # isTotalOverMoreThem3Points  true if total - 3  >= treshholdTotal
+    # isTotalOverMoreThem7Points  true if total - 7  >= treshholdTotal    
+    # isTotalOverMoreThem12Points true if total - 12 >= treshholdTotal    
+    # isTotalLessMoreThem1Points  true if total + 1  < treshholdTotal
+    # isTotalLessMoreThem3Points  true if total + 3  < treshholdTotal
+    # isTotalLessMoreThem7Points  true if total + 7  < treshholdTotal    
+    # isTotalLessMoreThem12Points true if total + 12 < treshholdTotal    
+
     def create_table_basketball_analisys_totals(self):
         with self.conn.cursor() as cur:
             try:
-                pass
+                cur.execute(
+                    """
+                    CREATE TABLE IF NOT EXISTS ftBasketballAnalisysTotal 
+                    (
+                        id                                   SERIAL PRIMARY KEY,
+                        sourceMatchId                        INT,
+                        isTotalOverMoreThem1Points           BOOL,
+                        isTotalOverMoreThem3Points           BOOL,
+                        isTotalOverMoreThem7Points           BOOL,
+                        isTotalOverMoreThem12Points          BOOL,
+                        isTotalLessMoreThem1Points           BOOL,
+                        isTotalLessMoreThem3Points           BOOL,
+                        isTotalLessMoreThem7Points           BOOL,
+                        isTotalLessMoreThem12Points          BOOL,
+                    )
+                    """
+                )
+                self.conn.commit()
             except Exception as e:
                 logging.error("e")
