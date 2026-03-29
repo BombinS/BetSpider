@@ -47,12 +47,20 @@ def main():
             page.go_back(wait_until='commit')
 
         # сброс json
-        with open(f"../../ParsedData/Basketball/{target}.json", "w", encoding="utf-8") as f:
+        with open(f"ParsedData/Basketball/{target}.json", "w", encoding="utf-8") as f:
             json.dump(seasonInfo, f)
                 
         # валидация json 
         for match in seasonInfo["schedule"]:
             ValidateMatchInfo(match).process()
+
+        # переносим лог
+        try:
+            s = Path("process.log")
+            d = Path(f"ParsedData/Basketball/process_{target}.log")
+            s.rename(d)
+        except Exception as e:
+            logging.error(f"Ошибка при переносе лога парсинга - {d.absolute}. Скорее всего файл открыт. {e}")
 
 if __name__ == "__main__":
 

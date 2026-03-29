@@ -1,4 +1,4 @@
-target = "acb-2022-2023"
+target = "acb"
 
 links = {
     "China": ["cba", "cba-2024-2025", "cba-2023-2024"],

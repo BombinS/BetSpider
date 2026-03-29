@@ -191,6 +191,7 @@ if __name__ == "__main__":
         for season in seasons:
             # считаем признаком архивного сезона длину имени спарсенного json. Если больше 8-ми (xxx.json) то архив
             if len(season.name) > 8:
+                logging.info(f"Загрузка сезона {season.name}")
                 load_matches(conn, season)
         exit()
         
