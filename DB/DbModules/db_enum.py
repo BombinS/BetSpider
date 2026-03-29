@@ -1,0 +1,5 @@
+from enum import Enum, auto
+
+class DbEnum(Enum):
+    CREATE_TABLE_BASKETBALL_RESULTS = auto(),
+    CREATE_TABLE_BASKETBALL_ANALISYS_TOTALS = auto()

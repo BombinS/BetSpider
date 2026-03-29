@@ -6,6 +6,9 @@ from contextlib import closing
 import logging
 logging.basicConfig(filename="dd.log", filemode="w", level=logging.DEBUG, encoding="utf-8")
 
+from DbModules.db_enum import DbEnum
+from DbModules.create_table import CreateTable
+
 def init_connection():
     conn = psycopg2.connect(
         host = "localhost",
@@ -16,48 +19,48 @@ def init_connection():
     )
     return conn
 
-def create_table_basketball(conn):
-    with conn.cursor() as cur:
-        try:
-            cur.execute(
-                """
-                CREATE TABLE IF NOT EXISTS ftBasketballResults
-                (
-                    id                      SERIAL         PRIMARY KEY,
-                    season                  VARCHAR(30),
-                    datetime                TIMESTAMP,
-                    homeTeam                VARCHAR(100),
-                    awayTeam                VARCHAR(100),
-                    homeScore               SMALLINT,
-                    awayScore               SMALLINT,
-                    total                   SMALLINT,
-                    Quarter1stHome          SMALLINT,
-                    Quarter1stAway          SMALLINT,
-                    Quarter1stTotal         SMALLINT,                                                            
-                    Quarter2ndHome          SMALLINT,
-                    Quarter2ndAway          SMALLINT,
-                    Quarter2ndTotal         SMALLINT,                                                            
-                    Quarter3rdHome          SMALLINT,
-                    Quarter3rdAway          SMALLINT,
-                    Quarter3rdTotal         SMALLINT,                                                            
-                    Quarter4thHome          SMALLINT,
-                    Quarter4thAway          SMALLINT,
-                    Quarter4thTotal         SMALLINT,
-                    oddHomeWin              REAL,
-                    oddDraw                 REAL,
-                    oddAwayWin              REAL,
-                    Margin1X2               REAL,
-                    oddHomeWinPercent       REAL,
-                    oddDrawPercent          REAL,
-                    oddAwayWinPercent       REAL,
-                    thresholdTotal          REAL,
-                    thresholdTotalQuarter   REAL             
-                )    
-                """
-            )
-            conn.commit()
-        except Exception as e:
-            logging.error(e)
+# def create_table_basketball(conn):
+#     with conn.cursor() as cur:
+#         try:
+#             cur.execute(
+#                 """
+#                 CREATE TABLE IF NOT EXISTS ftBasketballResults
+#                 (
+#                     id                      SERIAL         PRIMARY KEY,
+#                     season                  VARCHAR(30),
+#                     datetime                TIMESTAMP,
+#                     homeTeam                VARCHAR(100),
+#                     awayTeam                VARCHAR(100),
+#                     homeScore               SMALLINT,
+#                     awayScore               SMALLINT,
+#                     total                   SMALLINT,
+#                     Quarter1stHome          SMALLINT,
+#                     Quarter1stAway          SMALLINT,
+#                     Quarter1stTotal         SMALLINT,                                                            
+#                     Quarter2ndHome          SMALLINT,
+#                     Quarter2ndAway          SMALLINT,
+#                     Quarter2ndTotal         SMALLINT,                                                            
+#                     Quarter3rdHome          SMALLINT,
+#                     Quarter3rdAway          SMALLINT,
+#                     Quarter3rdTotal         SMALLINT,                                                            
+#                     Quarter4thHome          SMALLINT,
+#                     Quarter4thAway          SMALLINT,
+#                     Quarter4thTotal         SMALLINT,
+#                     oddHomeWin              REAL,
+#                     oddDraw                 REAL,
+#                     oddAwayWin              REAL,
+#                     Margin1X2               REAL,
+#                     oddHomeWinPercent       REAL,
+#                     oddDrawPercent          REAL,
+#                     oddAwayWinPercent       REAL,
+#                     thresholdTotal          REAL,
+#                     thresholdTotalQuarter   REAL             
+#                 )    
+#                 """
+#             )
+#             conn.commit()
+#         except Exception as e:
+#             logging.error(e)
 
 def clear_table_basketball(conn):
     with conn.cursor() as cur:
@@ -183,7 +186,11 @@ def load_matches(conn, season):
             load_match(conn, data["season"], match)
 
 if __name__ == "__main__":
+
     with closing(init_connection()) as conn:
+        CreateTable(conn, DbEnum.CREATE_TABLE_BASKETBALL_ANALISYS_TOTALS).process()
+        exit()
+        
         # create_table_basketball(conn)
         # clear_table_basketball(conn)
         path = Path("ParsedData\\Basketball")
@@ -193,6 +200,6 @@ if __name__ == "__main__":
             if len(season.name) > 8:
                 logging.info(f"Загрузка сезона {season.name}")
                 load_matches(conn, season)
-        exit()
+        
         
         
