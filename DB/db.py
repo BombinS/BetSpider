@@ -8,6 +8,7 @@ logging.basicConfig(filename="dd.log", filemode="w", level=logging.DEBUG, encodi
 
 from DbModules.db_enum import DbEnum
 from DbModules.create_table import CreateTable
+from DbModules.analisys_total import AnalisysTotal
 
 def init_connection():
     conn = psycopg2.connect(
@@ -188,7 +189,8 @@ def load_matches(conn, season):
 if __name__ == "__main__":
 
     with closing(init_connection()) as conn:
-        CreateTable(conn, DbEnum.CREATE_TABLE_BASKETBALL_ANALISYS_TOTALS).process()
+        # CreateTable(conn, DbEnum.CREATE_TABLE_BASKETBALL_ANALISYS_TOTALS).process()
+        AnalisysTotal(conn, DbEnum.FILL_TABLE_BASKETBALL_ANALISYS_TOTALS).process()
         exit()
         
         # create_table_basketball(conn)

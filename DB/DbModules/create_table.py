@@ -83,10 +83,10 @@ class CreateTable():
                         isTotalLessMoreThem1Points           BOOL,
                         isTotalLessMoreThem3Points           BOOL,
                         isTotalLessMoreThem7Points           BOOL,
-                        isTotalLessMoreThem12Points          BOOL,
+                        isTotalLessMoreThem12Points          BOOL
                     )
                     """
                 )
                 self.conn.commit()
             except Exception as e:
-                logging.error("e")
+                logging.error(e)
